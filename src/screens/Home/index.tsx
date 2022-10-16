@@ -1,13 +1,15 @@
 import React from 'react';
 import { Alert } from 'react-native';
 import BackgroundDefault from '../../components/BackgroundDefault';
-import Header from '../../components/header';
+import Header from '../../components/Header';
 import InsideTheDiet from '../../components/insideTheDiet';
 import CreateMeal from '../../components/createMeal';
 import ListDaily from '../../components/ListDaily';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Home: React.FC = () => {
+    const navigation = useNavigation();
     const data = [
         {
             title: "12.08.22",
@@ -86,15 +88,15 @@ const Home: React.FC = () => {
     ]
     return (
         <BackgroundDefault>
-            <Header />
+            <Header.HeaderPrincipal />
             <InsideTheDiet
-                onPress={() => { }}
+                onPress={() => { navigation.navigate("Statistic") }}
                 colorInside={true}
                 label='90,86%'
                 subLabel='das refeições dentro da dieta'
             />
             <CreateMeal
-                onPress={() => { Alert.alert('Adiconar dieta') }}
+                onPress={() => { }}
             />
             <ListDaily
                 data={data}
