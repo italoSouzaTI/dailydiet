@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-
+import { Touchable } from 'react-native'
 export const Container = styled.View`
     flex: 1;
 `;
@@ -11,7 +11,7 @@ export const Title = styled.Text`
     `}
     margin-top:32px;
 `;
-export const ContainerData = styled.View`
+export const ContainerData = styled(Touchable)`
     width: 100%;
     flex-direction: row;
     justify-content: space-between ;
