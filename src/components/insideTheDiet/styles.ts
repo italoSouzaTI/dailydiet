@@ -6,7 +6,7 @@ type isInsidetheDietColorProps = {
     colorInside: boolean
 }
 export const Container = styled(TouchableOpacity) <isInsidetheDietColorProps>`
-    margin-top: 33px;
+    margin-top: 32px;
     width: 100%;
     height: 102px;
     border-radius: 8px;

@@ -19,6 +19,7 @@ export const themDefault = {
             'gray_6': '#EFF0F0',
             'gray_7': '#FAFAFA',
             'gray_8': '#DDDEDF',
+            'white': '#FFF'
         }
     },
     font: {

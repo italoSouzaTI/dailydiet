@@ -18,11 +18,13 @@ interface InsideTheDietProps extends TouchableOpacityProps {
 const InsideTheDiet: React.FC<InsideTheDietProps> = ({
     label,
     subLabel,
-    colorInside = true
+    colorInside = true,
+    ...rest
 }) => {
     return (
         <Container
             colorInside={colorInside}
+            {...rest}
         >
             <ContainerInfo>
                 <ContainerIcon
