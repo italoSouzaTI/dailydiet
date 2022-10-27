@@ -18,7 +18,9 @@ import {
 const Statistic: React.FC = () => {
     return (
         <Container>
-            <Header.HeaderTitleGoback />
+            <Header.HeaderTitleGoback
+                Status="positivo"
+            />
             <ContainerInfo>
                 <Label>90,86%</Label>
                 <SubLabel>das refeições dentro da dieta</SubLabel>

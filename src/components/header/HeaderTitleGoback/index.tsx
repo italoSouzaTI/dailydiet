@@ -10,10 +10,12 @@ import {
 
 type HeaderTitleGobackProps = {
     name?: string
+    Status?: string
 }
 
 const HeaderTitleGoback: React.FC<HeaderTitleGobackProps> = ({
-    name
+    name,
+    Status
 }) => {
     const navigation = useNavigation()
     return (
@@ -21,12 +23,12 @@ const HeaderTitleGoback: React.FC<HeaderTitleGobackProps> = ({
             <ButtonGoback
                 onPress={() => { navigation.goBack() }}>
                 <Icon
-                    Status="positivo"
+                    Status={Status}
                     name="arrow-left"
                 />
             </ButtonGoback>
             <Title
-                Status="positivo"
+                Status={Status}
             >{name}</Title>
         </Container>
     );

@@ -7,14 +7,14 @@ import {
 } from './styles';
 
 type CreateMeal = {
-    onPress: () => void;
+    click: () => void;
 }
-const CreateMeal: React.FC<CreateMeal> = ({ onPress }) => {
+const CreateMeal: React.FC<CreateMeal> = ({ click }) => {
     return (
         <Container>
             <Label>Refeições</Label>
             <Buttons.ButtonPlus
-                onPress={onPress} />
+                onPress={click} />
         </Container>
     );
 }
