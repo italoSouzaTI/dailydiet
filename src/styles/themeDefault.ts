@@ -31,6 +31,7 @@ export const themDefault = {
             size_14: '14',
             size_16: '16',
             size_18: '18',
+            size_20: '20',
             size_24: '24',
             size_32: '32',
         }

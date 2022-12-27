@@ -166,7 +166,7 @@ const NewMeal: React.FC = (route) => {
     return (
         <Container>
             <Header.HeaderTitleGoback
-                name='Nova refeição'
+                name={edition.route.params?.data ? 'Editar refeição' : 'Nova refeição'}
             />
             <View
                 style={{ marginTop: 38 }}

@@ -13,12 +13,12 @@ export const Container = styled.View`
 export const ButtonGoback = styled(TouchableOpacity)``;
 
 type StatusIcon = {
-    Status: string
+    status: string
 }
 export const Icon = styled(Feather) <StatusIcon>`
-    ${({ theme, Status }) => css`
-        color:${Status === 'negativo' ? theme.produto.red.red_dark :
-            Status === 'positivo' ? theme.produto.green.green_dark :
+    ${({ theme, status }) => css`
+        color:${status === 'negativo' ? theme.produto.red.red_dark :
+            status === 'negativo' ? theme.produto.green.green_dark :
                 theme.produto.base.gray_2
         };
     `}
@@ -26,9 +26,9 @@ export const Icon = styled(Feather) <StatusIcon>`
 `;
 
 export const Title = styled.Text<StatusIcon>`
- ${({ theme, Status }) => css`
-        color:${Status === 'negativo' ? theme.produto.red.red_dark :
-            Status === 'positivo' ? theme.produto.green.green_dark :
+ ${({ theme, status }) => css`
+        color:${status === 'negativo' ? theme.produto.red.red_dark :
+            status === 'negativo' ? theme.produto.green.green_dark :
                 theme.produto.base.gray_2
         };
         font-size: ${theme.font.size.size_16}px;

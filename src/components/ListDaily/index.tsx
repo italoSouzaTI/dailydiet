@@ -27,7 +27,7 @@ const ListDaily: React.FC<ListPorps> = ({ data, ...rest }) => {
                 renderItem={({ item }) => (
                     <ContainerData
                         onPress={() => {
-                            navigation.navigate("NewMeal", {
+                            navigation.navigate("DetailsDaily", {
                                 data: item
                             })
                         }}

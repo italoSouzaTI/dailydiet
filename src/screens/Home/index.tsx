@@ -54,7 +54,7 @@ const Home: React.FC = () => {
                 subLabel='das refeições dentro da dieta'
             />
             <CreateMeal
-                click={() => { navigation.navigate("NewMeal"), { data: null } }}
+                click={() => { navigation.navigate("NewMeal") }}
             />
             <ListDaily
                 data={dataStorage}

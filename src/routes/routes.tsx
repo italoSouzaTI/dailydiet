@@ -4,6 +4,7 @@ import Home from '../screens/Home'
 import Statistic from '../screens/Statistic'
 import NewMeal from '../screens/NewMeal'
 import CheckDaily from '../screens/CheckDaily'
+import DetailsDaily from '../screens/DetailsDaily'
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -31,6 +32,10 @@ export function Routes () {
             <Screen
                 name="CheckDaily"
                 component={CheckDaily}
+            />
+            <Screen
+                name="DetailsDaily"
+                component={DetailsDaily}
             />
         </Navigator>
     )
