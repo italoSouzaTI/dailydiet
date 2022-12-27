@@ -6,13 +6,13 @@ export const Container = styled.View`
   align-items: center;
 `;
 type typecolor = {
-    iscolor: boolean
+    iscolor: string
 }
 export const Title = styled.Text<typecolor>`
     ${({ theme, iscolor }) => css`
         font-size: ${theme.font.size.size_24}px;
         font-family: ${theme.font.bold};
-        color:${iscolor ? theme.produto.green.green_dark : theme.produto.red.red_dark};
+        color:${iscolor === 'green' ? theme.produto.green.green_dark : theme.produto.red.red_dark};
     `}
     text-align:center;
     margin-bottom:8px;

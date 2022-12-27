@@ -52,13 +52,13 @@ export const LabelItem = styled.Text`
     align-items:flex-start;
 `;
 type statusProp = {
-    status: boolean;
+    status: string;
 }
 export const Status = styled.View<statusProp>`
     width: 14px;
     height: 14px;
     border-radius: 7px;
-    background-color: ${({ theme, status }) => status ? theme.produto.green.green_mid : theme.produto.red.red_mid};
+    background-color: ${({ theme, status }) => status == `green` ? theme.produto.green.green_mid : theme.produto.red.red_mid};
 `;
 
 export const Separetor = styled.View`

@@ -1,6 +1,6 @@
 import React from 'react';
-import { SectionList, TouchableOpacityProps, View } from 'react-native';
-
+import { SectionList, Text, TouchableOpacityProps, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native'
 import {
     Container,
     Title,
@@ -13,43 +13,52 @@ import {
 } from './styles';
 
 interface ListPorps extends TouchableOpacityProps {
-    data: Array<listaData>;
+    data: Array;
 }
-type listaData = {
-    title: string,
-    data: [{
-        time: string,
-        snack: string,
-        isDaily: boolean,
-    }]
-}
+
 
 const ListDaily: React.FC<ListPorps> = ({ data, ...rest }) => {
-
-
+    const navigation = useNavigation();
     return (
         <Container>
             <SectionList
                 sections={data}
-                keyExtractor={(item, index) => item + index}
+                keyExtractor={({ key }) => key}
                 renderItem={({ item }) => (
                     <ContainerData
-                        onPress={() => { }}
+                        onPress={() => {
+                            navigation.navigate("NewMeal", {
+                                data: item
+                            })
+                        }}
                     >
-                        <LabelData>{item.time}</LabelData>
+                        <LabelData>{item.date}</LabelData>
                         <ContainerDataItem>
-                            <LabelItem>{item.snack}</LabelItem>
+                            <LabelItem>{item.name}</LabelItem>
                         </ContainerDataItem>
                         <Status
-                            status={item.isDaily}
+                            status={item.isCheck.color}
                         />
                     </ContainerData>
-                )}
+                )
+                }
                 renderSectionHeader={({ section: { title } }) => (
                     <Title>{title}</Title>
                 )}
                 ItemSeparatorComponent={() => (<Separetor />)}
+                ListEmptyComponent={() => (
+                    <View
+                        style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <Text>Nenhum registro encontado.</Text>
+                    </View>
+                )}
             />
+
         </Container>
     );
 }

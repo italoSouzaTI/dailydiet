@@ -1,91 +1,49 @@
-import React from 'react';
-import { Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import BackgroundDefault from '../../components/BackgroundDefault';
-import Header from '../../components/Header';
+import Header from '../../components/header';
 import InsideTheDiet from '../../components/insideTheDiet';
 import CreateMeal from '../../components/createMeal';
 import ListDaily from '../../components/ListDaily';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { dayliDietProps } from '../NewMeal';
+import { dailyGetAll } from '../../storage/dailyDB';
+import groupBy from 'lodash.groupby'
 
 
 const Home: React.FC = () => {
     const navigation = useNavigation();
-    const data = [
-        {
-            title: "12.08.22",
-            data: [{
-                time: '20:00',
-                snack: 'X-tudo',
-                isDaily: false
-            },
-            {
-                time: '16:00',
-                snack: 'Whey protein com leite',
-                isDaily: true
-            },
-            {
-                time: '12:30',
-                snack: 'Salada cesar com frango grelhado',
-                isDaily: true
-            },
-            {
-                time: '09:30',
-                snack: 'Vitamina de banana com abacate',
-                isDaily: true
-            }
-            ]
-        },
-        {
-            title: "11.08.22",
-            data: [{
-                time: '20:00',
-                snack: 'X-tudo',
-                isDaily: false
-            },
-            {
-                time: '16:00',
-                snack: 'Whey protein com leite',
-                isDaily: false
-            },
-            {
-                time: '12:30',
-                snack: 'Salada cesar com frango grelhado',
-                isDaily: false
-            },
-            {
-                time: '09:30',
-                snack: 'Vitamina de banana com abacate',
-                isDaily: false
-            }
-            ]
-        },
-        {
-            title: "11.08.22",
-            data: [{
-                time: '20:00',
-                snack: 'X-tudo',
-                isDaily: true
-            },
-            {
-                time: '16:00',
-                snack: 'Whey protein com leite',
-                isDaily: true
-            },
-            {
-                time: '12:30',
-                snack: 'Salada cesar com frango grelhado',
-                isDaily: true
-            },
-            {
-                time: '09:30',
-                snack: 'Vitamina de banana com abacate',
-                isDaily: true
-            }
-            ]
-        },
+    const isfocused = useIsFocused();
+    const [dataStorage, setDataStorage] = useState<[]>([]);
 
+    async function populandoData () {
+        try {
+            const response = await dailyGetAll();
+            const groups = response.reduce((groups, game) => {
 
-    ]
+                const date = game.date.split('T')[0];
+                if (!groups[date]) {
+                    groups[date] = [];
+                }
+                groups[date].push(game);
+                return groups;
+            }, {});
+
+            const groupArrays = Object.keys(groups).map((date) => {
+                return {
+                    title: date,
+                    data: groups[date]
+                };
+            });
+            setDataStorage(groupArrays);
+        } catch (error) {
+            console.log('populandoData-error', error)
+        }
+    }
+
+    useEffect(() => {
+        populandoData();
+    }, [isfocused])
+
     return (
         <BackgroundDefault>
             <Header.HeaderPrincipal />
@@ -96,10 +54,10 @@ const Home: React.FC = () => {
                 subLabel='das refeições dentro da dieta'
             />
             <CreateMeal
-                click={() => { navigation.navigate("NewMeal") }}
+                click={() => { navigation.navigate("NewMeal"), { data: null } }}
             />
             <ListDaily
-                data={data}
+                data={dataStorage}
             />
         </BackgroundDefault>
     );

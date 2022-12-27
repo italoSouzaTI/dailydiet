@@ -1,10 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, Button, View } from 'react-native';
+import uuid from 'react-native-uuid';
 import Buttons from '../../components/Buttons';
 import FakeModal from '../../components/FakeModal';
-import Header from '../../components/Header';
+import Header from '../../components/header';
 import Input from '../../components/Input';
+import { dailyCreate, dailyGetAll } from '../../storage/dailyDB';
 
 import {
     Container,
@@ -16,20 +18,33 @@ import {
     ButtonAction,
     ContainerTwo
 } from './styles';
-
-type checkDailyProps = {
+export interface dayliDietProps {
+    data: Array<dailyProps>
+}
+export type dailyProps = {
+    key: string,
+    name: string,
+    descript: string,
+    hour: string,
+    date: string,
+    isCheck: checkDailyProps
+}
+export type checkDailyProps = {
     id: String,
     label: string,
     check: boolean,
     color: string,
 }
-const NewMeal: React.FC = () => {
+
+const NewMeal: React.FC = (route) => {
+    const edition = route;
     const navigation = useNavigation();
     const [name, setName] = useState<string>('');
     const [descript, setDescript] = useState<string>('');
     const [date, setDate] = useState<string>('');
     const [hour, setHour] = useState<string>('');
-    const [isCheck, setIsCheck] = useState<object>({
+    const [loading, setLoading] = useState(false);
+    const [isCheck, setIsCheck] = useState<checkDailyProps>({
         id: '',
         label: '',
         check: false,
@@ -62,7 +77,7 @@ const NewMeal: React.FC = () => {
         setCheckDaily(state => state = clone);
     }
 
-    function validation () {
+    async function validation () {
         if (name.trim() === '') {
             Alert.alert('Atenção', 'Preencha o campo nome');
             return
@@ -83,24 +98,71 @@ const NewMeal: React.FC = () => {
             Alert.alert('Atenção', 'Selecione uma o');
             return
         }
-        return onHandleActionDaily();
+        if (edition.route.params?.data) {
+            return await updateDB(edition.route.params?.data);
+        } else {
+            return await onHandleActionDaily();
+        }
     }
 
-    function onHandleActionDaily () {
-        let date = new Date()
-        let todaysDate = date.toLocaleDateString();
-        const data = [];
-        const params = {
+    async function updateDB (edition: dailyProps) {
+        try {
+            setLoading(true);
+            const responseStorage = await dailyGetAll();
+            if (responseStorage) {
+                responseStorage.map(item => {
+                    if (item.key === edition.key) {
+                        item.date = date,
+                            item.descript = descript,
+                            item.hour = hour,
+                            item.isCheck = isCheck,
+                            item.name = name
+                    }
+                })
+            }
+            await dailyCreate(responseStorage);
+            navigation.navigate("CheckDaily", { color: isCheck.color });
+        } catch (error) {
+
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    async function onHandleActionDaily () {
+        const aux = await dailyGetAll()
+        let newArray = [];
+        let paramsState: Array<dayliDietProps> = {
+            key: uuid.v4().toString(),
             name,
             descript,
             hour,
             date,
             isCheck
         };
-        data.push({ date: params })
-        console.log(data)
-    }
 
+        newArray.push(...aux, paramsState);
+        await dailyCreate(newArray);
+        navigation.navigate("CheckDaily", { color: isCheck.color });
+    }
+    function handleDate () {
+        const newDate = new Date();
+        setDate(newDate.toLocaleDateString());
+    }
+    function populatingData () {
+        setName((state) => state = edition.route.params?.data.name);
+        setDescript((state) => state = edition.route.params?.data.descript);
+        setDate((state) => state = edition.route.params?.data.date);
+        setHour((state) => state = edition.route.params?.data.hour);
+        onchangeDaily(edition.route.params?.data.isCheck.id);
+    }
+    useEffect(() => {
+        if (edition.route.params?.data) {
+            populatingData();
+        } else {
+            handleDate();
+        }
+    }, [])
     return (
         <Container>
             <Header.HeaderTitleGoback
@@ -146,7 +208,7 @@ const NewMeal: React.FC = () => {
                                     <Bagde
                                         colorBad={item.color}
                                     />
-                                    <Label>  {item.label}</Label>
+                                    <Label> {item.label}</Label>
                                 </ButtonAction>
                             ))
                         }
@@ -157,7 +219,7 @@ const NewMeal: React.FC = () => {
                 <ContainerBtn>
                     <Buttons.ButtonDefault
                         onPress={validation}
-                        label='Cadastrar refeição'
+                        label={edition.route.params?.data ? 'Salvar alterações' : 'Cadastrar refeição'}
                     />
                 </ContainerBtn>
             </FakeModal>

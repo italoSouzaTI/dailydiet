@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../../components/Header';
+import Header from '../../components/header';
 import FakeModal from '../../components/FakeModal';
 
 
@@ -15,7 +15,9 @@ import {
     Row
 } from './styles';
 
-const Statistic: React.FC = () => {
+const Statistic: React.FC = ({ route }) => {
+    // const { data } = route.params;
+    // console.log(data);
     return (
         <Container>
             <Header.HeaderTitleGoback
