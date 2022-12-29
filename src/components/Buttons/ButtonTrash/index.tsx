@@ -7,9 +7,12 @@ import {
     Label,
 } from './styles';
 
-type ButtonProps = TouchableOpacityProps & {}
+type ButtonProps = TouchableOpacityProps & {
+    label?: string
+}
 
 const ButtonTrash: React.FC<ButtonProps> = ({
+    label,
     ...rest
 }) => {
     return (
@@ -17,10 +20,10 @@ const ButtonTrash: React.FC<ButtonProps> = ({
             {...rest}
         >
             <Icon
-                name="trash-2"
+                label="trash-2"
             />
 
-            <Label>Excluir refeição</Label>
+            <Label>{label ?? 'Excluir refeição'}</Label>
         </Container>
     );
 }

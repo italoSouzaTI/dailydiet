@@ -38,6 +38,7 @@ export const Title = styled.Text`
     font-family:${theme.font.bold};
     `}
     margin-bottom:4px;
+    
 `;
 
 export const SubTitle = styled.Text`
@@ -72,4 +73,35 @@ margin-right: 10px;
 ${({ theme, statusBad }) => css`
     background:${statusBad === 'red' ? theme.produto.red.red_dark : theme.produto.green.green_dark};
     `}
+`;
+
+//Modal
+export const ContainerModal = styled.View`
+    flex: 1;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: center;
+    align-items: center;
+    background:rgba(0,0,0,0.2);
+`;
+
+export const CardModal = styled.View`
+    width: 90%;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    border-radius:8px;
+    ${({ theme }) => css`
+    background:${theme.produto.base.white};
+    `}
+`;
+export const DoubleButton = styled.View`
+    margin-top:32px;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+export const ContainerBTN = styled.View`
+    width: 48%;
 `;

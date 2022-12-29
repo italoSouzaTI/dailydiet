@@ -9,8 +9,6 @@ import {
 
 type ButtonProps = TouchableOpacityProps & {
     nameIcon?: string
-    nameButton: string
-    instaparen
     color?: string
 }
 
