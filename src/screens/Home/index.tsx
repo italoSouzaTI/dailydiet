@@ -14,10 +14,18 @@ const Home: React.FC = () => {
     const navigation = useNavigation();
     const isfocused = useIsFocused();
     const [dataStorage, setDataStorage] = useState<[]>([]);
+    const [dataStatistic, setDataStatistic] = useState<{}>({
+        countDaily: 0,
+        dailyCheck: 0,
+        dailyNoCheck: 0,
+        percentage: '',
+        insideDaily: false
+    });
 
     async function populandoData () {
         try {
             const response = await dailyGetAll();
+            handleStatistic(response);
             const groups = response.reduce((groups, game) => {
 
                 const date = game.date.split('T')[0];
@@ -40,17 +48,49 @@ const Home: React.FC = () => {
         }
     }
 
+    function handleStatistic (list: Array) {
+        let countDaily = 0;
+        let dailyCheck = 0;
+        let dailyNoCheck = 0;
+        let percentage = 0;
+        let insideDaily = false;
+        list.map(item => {
+            countDaily += 1;
+            if (item.isCheck.label === "Sim") {
+                dailyCheck += 1;
+            } else {
+                dailyNoCheck += 1;
+            }
+        })
+
+        if (dailyCheck > dailyNoCheck || dailyCheck == dailyNoCheck) {
+            percentage = parseFloat(((100 * dailyCheck) / countDaily));
+            insideDaily = true;
+        } else {
+            percentage = ((100 * dailyNoCheck) / countDaily);
+            insideDaily = false;
+        }
+
+        setDataStatistic(state => state = {
+            countDaily,
+            dailyCheck,
+            dailyNoCheck,
+            percentage,
+            insideDaily
+        });
+    }
+
     useEffect(() => {
         populandoData();
-    }, [isfocused])
+    }, [isfocused]);
 
     return (
         <BackgroundDefault>
             <Header.HeaderPrincipal />
             <InsideTheDiet
-                onPress={() => { navigation.navigate("Statistic") }}
-                colorInside={true}
-                label='90,86%'
+                onPress={() => { navigation.navigate("Statistic", dataStatistic) }}
+                colorInside={dataStatistic.insideDaily ? true : false}
+                label={`${dataStatistic.percentage}%`}
                 subLabel='das refeições dentro da dieta'
             />
             <CreateMeal

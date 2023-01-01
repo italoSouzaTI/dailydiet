@@ -18,7 +18,7 @@ type StatusIcon = {
 export const Icon = styled(Feather) <StatusIcon>`
     ${({ theme, status }) => css`
         color:${status === 'negativo' ? theme.produto.red.red_dark :
-            status === 'negativo' ? theme.produto.green.green_dark :
+            status === 'positivo' ? theme.produto.green.green_dark :
                 theme.produto.base.gray_2
         };
     `}
@@ -28,7 +28,7 @@ export const Icon = styled(Feather) <StatusIcon>`
 export const Title = styled.Text<StatusIcon>`
  ${({ theme, status }) => css`
         color:${status === 'negativo' ? theme.produto.red.red_dark :
-            status === 'negativo' ? theme.produto.green.green_dark :
+            status === 'positivo' ? theme.produto.green.green_dark :
                 theme.produto.base.gray_2
         };
         font-size: ${theme.font.size.size_16}px;

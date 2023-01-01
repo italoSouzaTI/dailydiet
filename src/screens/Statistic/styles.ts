@@ -1,8 +1,13 @@
 import styled, { css } from 'styled-components/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-export const Container = styled(SafeAreaView)`
+
+
+type ContainerProps = {
+    status: boolean;
+}
+export const Container = styled(SafeAreaView) <ContainerProps>`
     flex: 1;
-    background-color: ${({ theme }) => theme.produto.green.green_light};
+    background-color: ${({ theme, status }) => status ? theme.produto.green.green_light : theme.produto.red.red_light};
 `;
 export const ContainerInfo = styled.View`
     width:100%;

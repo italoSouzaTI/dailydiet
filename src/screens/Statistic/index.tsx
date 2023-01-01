@@ -16,15 +16,16 @@ import {
 } from './styles';
 
 const Statistic: React.FC = ({ route }) => {
-    // const { data } = route.params;
-    // console.log(data);
+    const data = route.params;
     return (
-        <Container>
+        <Container
+            status={data.insideDaily}
+        >
             <Header.HeaderTitleGoback
-                Status="positivo"
+                status={data.insideDaily ? 'positivo' : 'negativo'}
             />
             <ContainerInfo>
-                <Label>90,86%</Label>
+                <Label>{data.percentage}%</Label>
                 <SubLabel>das refeições dentro da dieta</SubLabel>
             </ContainerInfo>
             <FakeModal>
@@ -32,13 +33,13 @@ const Statistic: React.FC = ({ route }) => {
                 <CardData
                     colorcard="basic"
                 >
-                    <CardLabel>22</CardLabel>
+                    <CardLabel>{data.dailyCheck}</CardLabel>
                     <CardSubLabel>melhor sequência de pratos dentro da dieta</CardSubLabel>
                 </CardData>
                 <CardData
                     colorcard="basic"
                 >
-                    <CardLabel>109</CardLabel>
+                    <CardLabel>{data.countDaily}</CardLabel>
                     <CardSubLabel>refeições registradas</CardSubLabel>
                 </CardData>
                 <Row>
@@ -47,7 +48,7 @@ const Statistic: React.FC = ({ route }) => {
                             width: '48%'
                         }}
                     >
-                        <CardLabel>99</CardLabel>
+                        <CardLabel>{data.dailyCheck}</CardLabel>
                         <CardSubLabel>refeições dentro da dieta</CardSubLabel>
                     </CardData>
                     <CardData
@@ -56,7 +57,7 @@ const Statistic: React.FC = ({ route }) => {
                         }}
                         colorcard="negative"
                     >
-                        <CardLabel>10</CardLabel>
+                        <CardLabel>{data.dailyNoCheck}</CardLabel>
                         <CardSubLabel>refeições fora da dieta</CardSubLabel>
                     </CardData>
                 </Row>

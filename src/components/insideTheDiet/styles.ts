@@ -10,7 +10,7 @@ export const Container = styled(TouchableOpacity) <isInsidetheDietColorProps>`
     width: 100%;
     height: 102px;
     border-radius: 8px;
-    background-color: ${({ theme, colorInside }) => colorInside ? theme.produto.green.green_light : theme.produto.red.red_mid};
+    background-color: ${({ theme, colorInside }) => colorInside ? theme.produto.green.green_light : theme.produto.red.red_light};
     justify-content: center;
     align-items: center;
     padding-top: 20px;
